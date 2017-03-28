@@ -13,7 +13,7 @@ from rest_framework.settings import api_settings
 from .models import Text
 
 
-class ApiTextListViewTestCase(TestCase):
+class TextListAPIViewTestCase(TestCase):
     _ORDERING = ('-created_at', '-id')
 
     # ---- Utils ------------------------------------------------------------ #

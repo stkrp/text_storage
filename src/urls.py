@@ -15,9 +15,11 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from django.shortcuts import redirect
 
 
 urlpatterns = [
+    url(r'^$', lambda request: redirect('ui.text_list'), name='index'),
     url(r'^admin/', admin.site.urls),
     url(r'^text_storage/', include('text_storage.urls')),
 ]

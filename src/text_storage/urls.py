@@ -1,14 +1,14 @@
 from django.conf.urls import url, include
 
-from .views import TextListView
+from .views import TextListAPIView, TextListView
 
 
 api_urlpatterns = [
-    url(r'^texts/$', TextListView.as_view(), name='api.text_list'),
+    url(r'^texts/$', TextListAPIView.as_view(), name='api.text_list'),
 ]
 
 ui_urlpatterns = [
-
+    url(r'^texts/$', TextListView.as_view(), name='ui.text_list'),
 ]
 
 

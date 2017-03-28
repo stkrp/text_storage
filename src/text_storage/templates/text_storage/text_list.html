@@ -1,0 +1,79 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{% static 'css/lib/pure/pure.0.6.2.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/text_list.css' %}">
+    <script src="{% static 'js/lib/vue/vue.2.2.0.min.js' %}"></script>
+    <script src="{% static 'js/lib/vue/vue-resource.1.2.1.min.js' %}"></script>
+</head>
+<body>
+    {% verbatim %}
+    <div id="notification">
+        <transition name="fade">
+            <div id="message" class="pure-g" v-if="message" v-bind:class="NOTIFICATION_TYPES_CLASSES_MAPPING[type] || ''">
+                <div class="pure-u-1">{{ message }}</div>
+            </div>
+        </transition>
+    </div>
+    {% endverbatim %}
+    <div id="pure_container" class="pure-g">
+        <div id="app" class="pure-u-1">
+            <div id="main_menu_container" class="pure-menu pure-menu-horizontal bottom-big-margin">
+                <a href="{% url 'admin:index' %}" class="pure-menu-heading pure-menu-link">Site administration</a><!--
+             --><ul id="main_menu" class="pure-menu-list">
+                    <li class="pure-menu-item"><a href="http://about.stkrp.ru/" target="_blank" class="pure-menu-link">Author</a></li><!--
+                 --><li class="pure-menu-item"><a href="https://github.com/stkrp/text_storage" target="_blank" class="pure-menu-link">Sources</a></li>
+                </ul>
+            </div>
+
+            <form id="add_text_form" class="pure-form pure-form-stacked bottom-big-margin" method="POST" action="{% url 'api.text_list' %}" v-on:submit.prevent="add_text()">
+                {% csrf_token %}
+
+                <fieldset>
+                    <legend>Add text</legend>
+                    <label for="content">Content</label>
+                    <textarea name="content" id="content" class="pure-input-1" placeholder="Content" rows="5" required="required" v-model="content"></textarea>
+                </fieldset>
+
+                <button type="submit" class="pure-button pure-button-primary">Send</button>
+            </form>
+
+            <div id="text_list">
+                <div class="bottom-middle-margin">
+                    <input class="pure-button" type="button" value="Previous" v-on:click="updateFromPageNum(previous_page_num)" v-bind:disabled="!previous_page_num">
+                    <input class="pure-button" type="button" value="Next" v-on:click="updateFromPageNum(next_page_num)" v-bind:disabled="!next_page_num">
+                </div>
+                <table class="pure-table pure-table-bordered">
+                    <thead>
+                        <tr>
+                            <th class="id_col">#</th>
+                            <th class="content_col">Content</th>
+                            <th class="created_at_col">Created at</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% verbatim %}
+                        <tr v-for="text in texts">
+                            <td class="id_col break-all">{{ text.id }}</td>
+                            <!-- Не выводит переносы строк, но в БД все нормально -->
+                            <td class="content_col break-all">{{ text.content }}</td>
+                            <td class="created_at_col break-all">{{ text.created_at }}</td>
+                        </tr>
+                        {% endverbatim %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+        const TEXT_LIST_RESOURCE_URI = '{% url 'api.text_list' %}';
+        const CSRF_TOKEN = '{{ csrf_token }}';
+    </script>
+    <script src="{% static 'js/text_list.js' %}"></script>
+</body>
+</html>

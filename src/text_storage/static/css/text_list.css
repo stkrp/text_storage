@@ -1,0 +1,80 @@
+html, body {
+    background: #deeaf8;
+}
+
+.break-all {
+    word-break: break-all;
+}
+
+.bottom-big-margin {
+    margin-bottom: 2em;
+}
+
+.bottom-middle-margin {
+    margin-bottom: 1em;
+}
+
+#app {
+    background: white;
+    width: 60%;
+    margin: 2em auto;
+    padding: 2em;
+    border-radius: 4px;
+    box-shadow: 0 0 2em rgba(0, 0, 0, 0.1);
+}
+
+#main_menu_container {
+    border: 3px solid #eee;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+/* http://stackoverflow.com/a/20206221/6951639 */
+#text_list table {
+    table-layout: fixed;
+    width: 100%;
+}
+
+#text_list table thead th.id_col {
+    width: 15%;
+}
+
+#text_list table thead th.content_col {
+    width: 50%;
+}
+
+#text_list table thead th.created_at_col {
+    width: 35%;
+}
+
+#notification {
+    width: 100%;
+    opacity: 0.8;
+}
+
+#message {
+    padding: 1em 0.25em;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+}
+
+.success {
+    background: #90EE90;
+}
+
+.error {
+    background: #F08080;
+}
+
+.fade-enter-active, .fade-leave-active {
+    transition: all .5s ease;
+}
+
+.fade-enter, .fade-leave-to {
+    opacity: 0;
+}
